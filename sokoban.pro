@@ -5,6 +5,7 @@ QT += quick sensors
 
 # Source files
 SOURCES += main.cpp orientation.cpp \
+    game.cpp \
     game.cpp
 HEADERS += orientation.h \
     game.h

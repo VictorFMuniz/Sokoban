@@ -20,7 +20,7 @@
 #include <QQuickView>
 #include <qqml.h> // for qmlRegisterType
 
-#include "Orientation.h"
+#include "orientation.h"
 
 int main(int argc, char *argv[])
 {
