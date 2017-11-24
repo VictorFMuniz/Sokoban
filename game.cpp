@@ -1,7 +1,15 @@
 #include <QObject>
 
     explicit game::game(QObject *parent = 0){
-
+        //var boardItems; // list of floor, goal and border items on the field
+        int maxIndex=0; // number of cells in the current level's field = gameCanvas.numOfColumns * gameCanvas.numOfRows
+        //var board; // array containing the description of the current level's board
+        int numOfGoals = 0; // number of goal items (= number of objects)
+        int numOfTreasures = 0; // number of objects already on a goal item
+        //var itemObjects; // list of object items on the field
+        //var itemMan; // man item
+        //var undoHistory; // list of moves of the man and whether the man pushed an object on each move
+        int undoHistoryStep; // number of the current step in the undo history
     }
 //    ~game();
 
@@ -13,7 +21,22 @@
     }
 
     void game::deleteBlocks(){
-
+        for (int i = 0; i < maxIndex; ++i) {
+            if (boardItems[i] != null)
+            {
+                boardItems[i].opacity = 0;
+                boardItems[i].destroy();
+            }
+        }
+        for (var i = 0; i < numOfGoals; ++i) { // numOfGoals = number of objects
+            if (itemObjects[i] != null)
+            {
+                itemObjects[i].opacity = 0;
+                itemObjects[i].destroy();
+            }
+        }
+        if (itemMan != null)
+            itemMan.opacity = 0;
     }
 
     void game::createBoard(){
