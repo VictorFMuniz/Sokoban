@@ -1,4 +1,4 @@
-/**
++/**
 
 	Game implementation in Javascript.
 

@@ -11,7 +11,7 @@
         //var undoHistory; // list of moves of the man and whether the man pushed an object on each move
         int undoHistoryStep; // number of the current step in the undo history
     }
-    ~game(int);
+ //   ~game();
 
     int Q_INVOKABLE index(int column, int row) {
 
