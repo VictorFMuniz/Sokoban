@@ -1,6 +1,6 @@
 #include <QObject>
 
-    explicit game::game(QObject *parent = 0){
+    explicit Game::Game(QObject *parent = 0){
         //var boardItems; // list of floor, goal and border items on the field
         int maxIndex=0; // number of cells in the current level's field = gameCanvas.numOfColumns * gameCanvas.numOfRows
         //var board; // array containing the description of the current level's board
@@ -11,16 +11,16 @@
         //var undoHistory; // list of moves of the man and whether the man pushed an object on each move
         int undoHistoryStep; // number of the current step in the undo history
     }
- //   ~game();
+ //   ~Game();
 
     int Q_INVOKABLE index(int column, int row) {
 
     }
-    void game::startNewGame(){
+    void Game::startNewGame(){
 
     }
 
-    void game::deleteBlocks(){
+    void Game::deleteBlocks(){
         for (int i = 0; i < maxIndex; ++i) {
             if (boardItems[i] != null)
             {
@@ -39,90 +39,90 @@
             itemMan.opacity = 0;
     }
 
-    void game::createBoard(){
+    void Game::createBoard(){
 
     }
 
-    void game::initBoard(){
+    void Game::initBoard(){
 
     }
 
-    QObject* game::createBlockObject(QObject* item, int column, int row){
+    QObject* Game::createBlockObject(QObject* item, int column, int row){
 
     }
 
-    bool game::createBlock(int column, int row){
+    bool Game::createBlock(int column, int row){
 
     }
 
-    void game::setZooming(bool isZooming){
+    void Game::setZooming(bool isZooming){
 
     }
 
-    void game::recenterMan(int x, int y,int dx, int dy){
+    void Game::recenterMan(int x, int y,int dx, int dy){
 
     }
 
-    void game::zoomIn() {
+    void Game::zoomIn() {
 
     }
 
-    void game::zoomOut() {
+    void Game::zoomOut() {
 
     }
 
-    void game::testLevelWon() {
+    void Game::testLevelWon() {
 
     }
 
-    int game::findItemObjectNumber(int column, int row) {
+    int Game::findItemObjectNumber(int column, int row) {
 
     }
 
-    void game::changeManPosition(int oldX, int oldY, int newX, int newY, int dx, int dy) {
+    void Game::changeManPosition(int oldX, int oldY, int newX, int newY, int dx, int dy) {
 
     }
 
-    void game::changeObjectPosition(int which, int oldX, int oldY, int newX, int newY) {
+    void Game::changeObjectPosition(int which, int oldX, int oldY, int newX, int newY) {
 
     }
 
-    void game::moveMan(int dx,int dy) {
+    void Game::moveMan(int dx,int dy) {
 
     }
 
-    void game::moveUp() {
+    void Game::moveUp() {
 
     }
 
-    void game::moveDown() {
+    void Game::moveDown() {
 
     }
 
-    void game::moveLeft() {
+    void Game::moveLeft() {
 
     }
 
-    void game::moveRight() {
+    void Game::moveRight() {
 
     }
 
-    void game::moveManWithMouse(int x, int y) {
+    void Game::moveManWithMouse(int x, int y) {
 
     }
 
-    void game::addToUndoHistory(int dx, int dy,bool isPushing) {
+    void Game::addToUndoHistory(int dx, int dy,bool isPushing) {
 
     }
 
-    void game::undo() {
+    void Game::undo() {
 
     }
 
-    void game::goToPreviousLevel() {
+    void Game::goToPreviousLevel() {
 
     }
 
-    void game::goToNextLevel() {
+    void Game::goToNextLevel() {
 
     }

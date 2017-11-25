@@ -15,22 +15,33 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.  *
  ***************************************************************************/
-
 #include <QGuiApplication>
-#include <QQuickView>
-#include <qqml.h> // for qmlRegisterType
-
+#include <QtQuick>
+#include <QQmlContext>
+#include <QDebug>
 #include "orientation.h"
+#include "game.h"
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app( argc, argv );
 
-    // Expose the Orientation class
-    qmlRegisterType<Orientation>( "GameComponents", 1, 0, "Orientation" );
+    Game game; //Instanciando a classe Game
 
-    QQuickView viewer;
-    viewer.setSource( QUrl( "qrc:///main.qml" ) );
+    // Expondo as classes para o QML
+    qmlRegisterType<Orientation>( "GameComponents", 1, 0, "Orientation" );
+    qmlRegisterType<Game>( "GameComponents", 1, 0, "Game" );
+
+
+    //Preparando o QQuickView
+    QQuickView view;
+    view.engine()->rootContext()->setContextProperty("msg", &msg);
+    view.setSource( QUrl( "qrc:///main.qml" ) );
+
+    //Instanciando o QML como um objeto
+    Game::setViewer(view.rootObject());
+
+    //Iniciando o viewer
     viewer.show();
 
     return app.exec();

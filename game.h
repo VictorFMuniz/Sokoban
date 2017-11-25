@@ -1,14 +1,17 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <QGuiApplication>
+#include <QQuickView>
+#include <QQmlContext>
 #include <QObject>
 
-class game : public QObject
+class Game : public QObject
 {
     Q_OBJECT
 public:
-    explicit game(QObject *parent = 0);
-    //~game();
+    explicit Game(QObject *parent = 0);
+    //~Game();
 
 private:
     //var boardItems; // list of floor, goal and border items on the field
@@ -20,6 +23,12 @@ private:
     //var itemMan; // man item
     //var undoHistory; // list of moves of the man and whether the man pushed an object on each move
     int undoHistoryStep; // number of the current step in the undo history
+
+
+public:
+    static QObject* qmlObject;
+    static void setViewer(QObject* ob);
+
 
     int Q_INVOKABLE index(int column, int row);
     void startNewGame(); /* Initialization */
