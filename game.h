@@ -11,9 +11,9 @@ public:
     //~game();
 
 private:
-    //var boardItems; // list of floor, goal and border items on the field
+    var boardItems; // list of floor, goal and border items on the field
     int maxIndex; // number of cells in the current level's field = gameCanvas.numOfColumns * gameCanvas.numOfRows
-    //var board; // array containing the description of the current level's board
+    var board; // array containing the description of the current level's board
     int numOfGoals; // number of goal items (= number of objects)
     int numOfTreasures; // number of objects already on a goal item
     //var itemObjects; // list of object items on the field
