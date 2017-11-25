@@ -1,4 +1,8 @@
 #include <QObject>
+#include <vector>
+#include <math.h>
+
+using namespace std;
 
     explicit game::game(QObject *parent = 0){
 
@@ -9,15 +13,74 @@
 
     }
     void game::startNewGame(){
+        gameView.state = "playing";
+        if(gameView.currentLevel < 0) {
+            gameView.currentLevel = 0;
+        }
+        gameCanvas.isAnimated = false;
 
+        if(gameView.currentLevel >= gameView.levels.length) {
+            gameView.currentLevel = 0;
+        }
+        undoHistory = new vector<int>();
+        undoHistoryStep = 0;
+        deleteBlocks();
+
+        gameCanvas.addBlockSize = 0;
+        gameCanvas.addOffsetX = 0;
+        gameCanvas.addOffsetY = 0;
+        gameCanvas.numOfRows = gameView.levels[gameView.currentLevel].length;
+
+        gameCanvas.numOfColumns = 0;
+            for (int i = 0; i < gameCanvas.numOfRows; ++i) {
+                gameCanvas.numOfColumns =   max(gameCanvas.numOfColumns, gameView.levels[gameView.currentLevel][i].length);
+            }
+            maxIndex = gameCanvas.numOfRows * gameCanvas.numOfColumns;
+
+            initBoard(); // initialize board
+            gameCanvas.isAnimated = true;
     }
 
     void game::deleteBlocks(){
-
+        for (int i = 0; i < maxIndex; ++i) {
+                if (boardItems[i] != NULL)
+                {
+                    boardItems[i].opacity = 0;
+                    boardItems[i].destroy();
+                }
+            }
+            for (int i = 0; i < numOfGoals; ++i) {
+                if (itemObjects[i] != NULL)
+                {
+                    itemObjects[i].opacity = 0;
+                    itemObjects[i].destroy();
+                }
+            }
+            if (itemMan != NULL)
+                itemMan.opacity = 0;
     }
 
     void game::createBoard(){
+        board = new Array(gameCanvas.numOfRows);
+            numOfGoals = 0;
+            numOfTreasures = 0;
 
+            for (var row = 0; row < gameCanvas.numOfRows; ++row) {
+                board[row] = new Array(gameCanvas.numOfColumns);
+                for (var column = 0; column < gameCanvas.numOfColumns; ++column) {
+                    // 0: outside, 1: inside, 2: border, 3: goal, 4: object, 5: man, 6: object on goal, 7: man on goal
+                    var boardElement = (column < gameView.levels[gameView.currentLevel][row].length) ? gameView.levels[gameView.currentLevel][row].charAt(column) : ' ';
+                    switch (boardElement) {
+                        case ' ': board[row][column] = 1; break;
+                        case '#': board[row][column] = 2; break;
+                        case '.': board[row][column] = 3; ++numOfGoals; break;
+                        case '$': board[row][column] = 4; break;
+                        case '@': board[row][column] = 5; break;
+                        case '*': board[row][column] = 6; ++numOfGoals; ++numOfTreasures; break;
+                        case '+': board[row][column] = 7; ++numOfGoals; break;
+                        default: board[row][column] = 0;
+                    }
+                }
     }
 
     void game::initBoard(){
