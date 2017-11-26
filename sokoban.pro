@@ -6,9 +6,13 @@ QT += quick sensors
 # Source files
 SOURCES += main.cpp orientation.cpp \
     game.cpp \
-    game.cpp
+    game.cpp \
+    gamecanvas.cpp \
+    gameview.cpp
 HEADERS += orientation.h \
-    game.h
+    game.h \
+    gamecanvas.h \
+    gameview.h
 RESOURCES += qmlsokoban.qrc
 
 OTHER_FILES += main.qml \
