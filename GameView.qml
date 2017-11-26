@@ -22,7 +22,7 @@
 */
 
 import QtQuick 2.0
-import "game.js" as Game
+import gameComponents as Game
 
 Item {
 	id: gameView
