@@ -7,6 +7,7 @@
 #include <QQmlContext>
 #include <QObject>
 
+
 class game : public QObject
 {
     Q_OBJECT
