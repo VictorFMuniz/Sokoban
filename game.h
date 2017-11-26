@@ -6,6 +6,8 @@
 #include <QQuickView>
 #include <QQmlContext>
 #include <QObject>
+#include "gamecanvas.h"
+#include "gameview.h"
 
 
 class game : public QObject
@@ -21,10 +23,12 @@ private:
     var board; // array containing the description of the current level's board
     int numOfGoals; // number of goal items (= number of objects)
     int numOfTreasures; // number of objects already on a goal item
-    //var itemObjects; // list of object items on the field
-    //var itemMan; // man item
-    //var undoHistory; // list of moves of the man and whether the man pushed an object on each move
-    int undoHistoryStep; // number of the current step in the undo history
+    QObject* itemObjects; // list of object items on the field
+    QObject* itemMan; // man item
+    int* undoHistory; // list of moves of the man and whether the man pushed an object on each move
+    int  undoHistoryStep; // number of the current step in the undo history
+    GameCanvas gameCanvas;
+    GameView gameView;
 
     Q_INVOKABLE int index(int column, int row);
     Q_INVOKABLE void startNewGame(); /* Initialization */

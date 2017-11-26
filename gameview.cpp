@@ -23,7 +23,7 @@ bool GameView::isAnimated(){
     return GameView::qmlObject->property("isAnimated").toBool();
 }
 void GameView::state(QString state){
-   return GameView::qmlObject->setProperty("state",state);
+   GameView::qmlObject->setProperty("state",state);
 }
 QObject* GameView::levels(){
     return GameView::qmlObject->property("levels");

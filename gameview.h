@@ -9,6 +9,7 @@
 class GameView : public QObject
 {
     Q_OBJECT
+
 public:
     explicit GameView(QObject *parent = 0);
     //~Game();
