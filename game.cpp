@@ -7,7 +7,6 @@
 #include <vector>
 #include <math.h>
 
-
 using namespace std;
 
     explicit game::game(QObject *parent = 0) {
@@ -19,29 +18,29 @@ using namespace std;
         return column + (row * gameCanvas.numOfColumns);
     }
     void game::startNewGame(){
-        gameView.state = "playing";
-        if(gameView.currentLevel < 0) {
-            gameView.currentLevel = 0;
+        gameView.state("playing");
+        if(gameView.currentLevel() < 0) {
+            gameView.currentLevel() = 0;
         }
         gameCanvas.isAnimated = false;
 
-        if(gameView.currentLevel >= gameView.levels.length) {
-            gameView.currentLevel = 0;
+        if(gameView.currentLevel() >= gameView.levels().length) {
+            gameView.currentLevel() = 0;
         }
         undoHistory = new vector<int>();
         undoHistoryStep = 0;
         deleteBlocks();
 
         gameCanvas.addBlockSize = 0;
-        gameCanvas.addOffsetX = 0;
-        gameCanvas.addOffsetY = 0;
-        gameCanvas.numOfRows = gameView.levels[gameView.currentLevel].length;
+        gameCanvas.addOffsetX() = 0;
+        gameCanvas.addOffsetY() = 0;
+        gameCanvas.numOfRows() = gameView.levels()[gameView.currentLevel()].length;
 
-        gameCanvas.numOfColumns = 0;
-            for (int i = 0; i < gameCanvas.numOfRows; ++i) {
-                gameCanvas.numOfColumns =   max(gameCanvas.numOfColumns, gameView.levels[gameView.currentLevel][i].length);
+        gameCanvas.numOfColumns() = 0;
+            for (int i = 0; i < gameCanvas.numOfRows(); ++i) {
+                gameCanvas.numOfColumns() =   max(gameCanvas.numOfColumns(), gameView.levels()[gameView.currentLevel()][i].length);
             }
-            maxIndex = gameCanvas.numOfRows * gameCanvas.numOfColumns;
+            maxIndex = gameCanvas.numOfRows() * gameCanvas.numOfColumns();
 
             initBoard(); // initialize board
             gameCanvas.isAnimated = true;
@@ -67,16 +66,16 @@ using namespace std;
                 itemMan.opacity = 0;
     }
 
-    void game::createBoard(){
-        vector<int> board(gameCanvas.numOfRows);
+    void game::createBoard() {
+        vector<int> board(gameCanvas.numOfRows());
             numOfGoals = 0;
             numOfTreasures = 0;
 
-            for (int row = 0; row < gameCanvas.numOfRows; ++row) {
-                 *board[row] = new vector<int>(gameCanvas.numOfColumns); //verificar o funcionamento disso
-                for (int column = 0; column < gameCanvas.numOfColumns; ++column) {
-                    // 0: outside, 1: inside, 2: border, 3: goal, 4: object, 5: man, 6: object on goal, 7: man on goal
-                    char boardElement = (column < gameView.levels[gameView.currentLevel][row].length) ? gameView.levels[gameView.currentLevel][row].charAt(column) : ' ';
+            for (int row = 0; row < gameCanvas.numOfRows(); ++row) {
+                 *board[row] = new vector<int>(gameCanvas.numOfColumns()); //verificar o funcionamento disso
+                for (int column = 0; column < gameCanvas.numOfColumns(); ++column) {
+
+                    char boardElement = (column < gameView.levels()[gameView.currentLevel()][row].length) ? gameView.levels()[gameView.currentLevel()][row].charAt(column) : ' ';
                     switch (boardElement) {
                         case ' ': board[row][column] = 1; break;
                         case '#': board[row][column] = 2; break;
@@ -88,16 +87,17 @@ using namespace std;
                         default: board[row][column] = 0;
                     }
                 }
+            }
     }
 
     void game::initBoard() {
-        boardItems = new vector<QObject*>(maxIndex); // descobrir o que são items, que são objetos QML, não sei como invocá-los ou declará-los
+        boardItems = new vector<QObject*>(maxIndex);
         itemObjects = new vector<QObject*>();
 
         createBoard();
 
-        for (int column = 0; column < gameCanvas.numOfColumns; ++column) {
-            for (int row = 0; row < gameCanvas.numOfRows; ++row) {
+        for (int column = 0; column < gameCanvas.numOfColumns(); ++column) {
+            for (int row = 0; row < gameCanvas.numOfRows(); ++row) {
                 boardItems[index(column, row)] = NULL;
                 createBlock(column, row);
             }
@@ -187,8 +187,8 @@ using namespace std;
     }
 
     void game::setZooming(bool isZooming){
-        for (int row = 0; row < gameCanvas.numOfRows; ++row) {
-            for (int column = 0; column < gameCanvas.numOfColumns; ++column) {
+        for (int row = 0; row < gameCanvas.numOfRows(); ++row) {
+            for (int column = 0; column < gameCanvas.numOfColumns(); ++column) {
                 if (board[row][column] > 0){
                     boardItems[index(column, row)].isZooming = isZooming;
                 }
@@ -204,42 +204,42 @@ using namespace std;
     }
 
     void game::recenterMan(int x, int y, int dx, int dy){
-        int currentManPixelX = x * gameCanvas.blockSize + gameCanvas.offsetX;
-        int currentManPixelY = y * gameCanvas.blockSize + gameCanvas.offsetY;
+        int currentManPixelX = x * gameCanvas.blockSize() + gameCanvas.offsetX;
+        int currentManPixelY = y * gameCanvas.blockSize() + gameCanvas.offsetY;
 
-        if (gameCanvas.numOfColumns * gameCanvas.blockSize <= gameCanvas.width) {
+        if (gameCanvas.numOfColumns() * gameCanvas.blockSize() <= gameCanvas.width()) {
             dx = 0;
-            gameCanvas.addOffsetX = 0;
+            gameCanvas.addOffsetX() = 0;
         }
-        if (gameCanvas.numOfRows * gameCanvas.blockSize <= gameCanvas.height) {
+        if (gameCanvas.numOfRows() * gameCanvas.blockSize() <= gameCanvas.height()) {
             dy = 0;
-            gameCanvas.addOffsetY = 0;
+            gameCanvas.addOffsetY() = 0;
         }
 
         if (dx < 0 || dx > 1)
-            while (currentManPixelX < 3 * gameCanvas.blockSize) {
-                gameCanvas.addOffsetX += gameCanvas.blockSize;
-                currentManPixelX += gameCanvas.blockSize;
+            while (currentManPixelX < 3 * gameCanvas.blockSize()) {
+                gameCanvas.addOffsetX() += gameCanvas.blockSize();
+                currentManPixelX += gameCanvas.blockSize();
             }
         if (dy < 0 || dy > 1)
-            while (currentManPixelY < 3 * gameCanvas.blockSize) {
-                gameCanvas.addOffsetY += gameCanvas.blockSize;
-                currentManPixelY += gameCanvas.blockSize;
+            while (currentManPixelY < 3 * gameCanvas.blockSize()) {
+                gameCanvas.addOffsetY() += gameCanvas.blockSize();
+                currentManPixelY += gameCanvas.blockSize();
             }
         if (dx > 0)
-            while (currentManPixelX > gameCanvas.width - 3 * gameCanvas.blockSize) {
-                gameCanvas.addOffsetX -= gameCanvas.blockSize;
-                currentManPixelX -= gameCanvas.blockSize;
+            while (currentManPixelX > gameCanvas.width() - 3 * gameCanvas.blockSize()) {
+                gameCanvas.addOffsetX() -= gameCanvas.blockSize();
+                currentManPixelX -= gameCanvas.blockSize();
             }
         if (dy > 0)
-            while (currentManPixelY > gameCanvas.height - 3 * gameCanvas.blockSize) {
-                gameCanvas.addOffsetY -= gameCanvas.blockSize;
-                currentManPixelY -= gameCanvas.blockSize;
+            while (currentManPixelY > gameCanvas.height() - 3 * gameCanvas.blockSize()) {
+                gameCanvas.addOffsetY() -= gameCanvas.blockSize();
+                currentManPixelY -= gameCanvas.blockSize();
             }
     }
 
     void game::zoomIn() {
-        if (6 * gameCanvas.blockSize > gameCanvas.width || 6 * gameCanvas.blockSize > gameCanvas.height){
+        if (6 * gameCanvas.blockSize() > gameCanvas.width() || 6 * gameCanvas.blockSize() > gameCanvas.height()){
             return;
         }
         setZooming(true);
@@ -249,7 +249,7 @@ using namespace std;
     }
 
     void game::zoomOut() {
-        if (gameCanvas.blockSize < 10){
+        if (gameCanvas.blockSize() < 10){
             return;
         }
 
@@ -261,10 +261,10 @@ using namespace std;
 
     void game::testLevelWon() {
         if (numOfTreasures == numOfGoals) {
-            if (gameView.currentLevel >= gameView.levels.length - 1)
-                gameView.state = "gamewon";
+            if (gameView.currentLevel() >= gameView.levels().length - 1)
+                gameView.state("gamewon");
             else
-                gameView.state = "levelwon";
+                gameView.state("levelwon");
         }
     }
 
@@ -290,8 +290,8 @@ using namespace std;
             --numOfTreasures;
         board[newY][newX] += 3; // 1: inside -> 4: object; 3: goal -> 6: treasure
         board[oldY][oldX] -= 3; // 4 -> 1; 6 -> 3
-        itemObjects[which].column = newX
-        itemObjects[which].row = newY
+        itemObjects[which].column = newX;
+        itemObjects[which].row = newY;
         if (board[newY][newX] == 6) // if object now on goal
             ++numOfTreasures;
     }
@@ -333,8 +333,8 @@ using namespace std;
     }
 
     void game::moveManWithMouse(int x, int y) {
-        int dx = (int) floor((x - gameCanvas.offsetX) / gameCanvas.blockSize) - itemMan.column;
-        int dy = (int) floor((y - gameCanvas.offsetY) / gameCanvas.blockSize) - itemMan.row;
+        int dx = (int) floor((x - gameCanvas.offsetX) / gameCanvas.blockSize()) - itemMan.column;
+        int dy = (int) floor((y - gameCanvas.offsetY) / gameCanvas.blockSize()) - itemMan.row;
 
         if (dx != 0 && dy != 0) // we allow movement in one direction only
             return;
@@ -397,18 +397,18 @@ using namespace std;
     }
 
     void game::goToPreviousLevel() {
-        if (gameView.currentLevel > 0) {
-            --gameView.currentLevel;
+        if (gameView.currentLevel() > 0) {
+            --gameView.currentLevel();
         } else {
-            gameView.currentLevel = gameView.levels.length - 1;
+            gameView.currentLevel() = gameView.levels().length - 1;
         }
         startNewGame();
     }
 
     void game::goToNextLevel() {
-        if (gameView.currentLevel < gameView.levels.length - 1)
-            ++gameView.currentLevel;
+        if (gameView.currentLevel() < gameView.levels().length - 1)
+            ++gameView.currentLevel();
         else
-            gameView.currentLevel = 0;
+            gameView.currentLevel() = 0;
         startNewGame();
     }
