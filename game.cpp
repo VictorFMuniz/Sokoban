@@ -6,7 +6,9 @@
 using namespace std;
 
     explicit game::game(QObject *parent = 0) {
-
+        QQuickView view;
+        view.setSource( QUrl( "qrc:///GameView.qml" ) );
+        view.show();
     }
 //    ~game();
     // nao entendi oq ta acontecendo nesse método

@@ -33,5 +33,19 @@ int main(int argc, char *argv[])
     viewer.setSource( QUrl( "qrc:///main.qml" ) );
     viewer.show();
 
+
+    QGuiApplication app(argc, argv);
+    Message msg;
+    qmlRegisterType<Message>( "MessageComponents", 1, 0, "Message" );
+
+    QQuickView view;
+    view.engine()->rootContext()->setContextProperty("msg", &msg);
+    view.setSource( QUrl( "qrc:///main.qml" ) );
+
+    Message::setViewer(view.rootObject());
+    qDebug()<<Message::getNum();
+    view.show();
+
+
     return app.exec();
 }

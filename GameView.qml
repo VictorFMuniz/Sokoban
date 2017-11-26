@@ -88,6 +88,7 @@ Item {
 
 	Item {
 		id: gameCanvas
+        objectName: gameCanvas
 		property bool isAnimated: false
 
 		x: parent.x
