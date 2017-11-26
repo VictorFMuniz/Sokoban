@@ -61,7 +61,7 @@ function startNewGame() {
 	gameCanvas.addOffsetY = 0;
 
 	// calculate board size
-	gameCanvas.numOfRows = gameView.levels[gameView.currentLevel].length;
+    gameCanvas.numOfRows = gameView.levels[gameView.currentLevel].length;
 	gameCanvas.numOfColumns = 0;
 	for (var i = 0; i < gameCanvas.numOfRows; ++i) {
 		gameCanvas.numOfColumns = Math.max(gameCanvas.numOfColumns, gameView.levels[gameView.currentLevel][i].length);

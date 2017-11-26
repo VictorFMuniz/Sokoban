@@ -1,6 +1,10 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <QDebug>
+#include <QGuiApplication>
+#include <QQuickView>
+#include <QQmlContext>
 #include <QObject>
 
 class game : public QObject
@@ -21,31 +25,31 @@ private:
     //var undoHistory; // list of moves of the man and whether the man pushed an object on each move
     int undoHistoryStep; // number of the current step in the undo history
 
-    int Q_INVOKABLE index(int column, int row);
-    void startNewGame(); /* Initialization */
-    void deleteBlocks();
-    void createBoard();
-    void initBoard();
-    QObject* createBlockObject(QObject* item, int column, int row);
-    bool createBlock(int column, int row);
-    void setZooming(bool isZooming);/* Zooming */
-    void recenterMan(int x, int y,int dx, int dy);
-    void zoomIn();
-    void zoomOut();
-    void testLevelWon();
-    int findItemObjectNumber(int column, int row);
-    void changeManPosition(int oldX, int oldY, int newX, int newY, int dx, int dy);
-    void changeObjectPosition(int which, int oldX, int oldY, int newX, int newY);
-    void moveMan(int dx,int dy);
-    void moveUp();
-    void moveDown();
-    void moveLeft();
-    void moveRight();
-    void moveManWithMouse(int x, int y);
-    void addToUndoHistory(int dx, int dy,bool isPushing);
-    void undo();
-    void goToPreviousLevel();/* Change levels */
-    void goToNextLevel();
+    Q_INVOKABLE int index(int column, int row);
+    Q_INVOKABLE void startNewGame(); /* Initialization */
+    Q_INVOKABLE void deleteBlocks();
+    Q_INVOKABLE void createBoard();
+    Q_INVOKABLE  void initBoard();
+    Q_INVOKABLE QObject* createBlockObject(QObject* item, int column, int row);
+    Q_INVOKABLE bool createBlock(int column, int row);
+    Q_INVOKABLE void setZooming(bool isZooming);/* Zooming */
+    Q_INVOKABLE void recenterMan(int x, int y,int dx, int dy);
+    Q_INVOKABLE void zoomIn();
+    Q_INVOKABLE void zoomOut();
+    Q_INVOKABLE void testLevelWon();
+    Q_INVOKABLE int findItemObjectNumber(int column, int row);
+    Q_INVOKABLE void changeManPosition(int oldX, int oldY, int newX, int newY, int dx, int dy);
+    Q_INVOKABLE void changeObjectPosition(int which, int oldX, int oldY, int newX, int newY);
+    Q_INVOKABLE void moveMan(int dx,int dy);
+    Q_INVOKABLE void moveUp();
+    Q_INVOKABLE void moveDown();
+    Q_INVOKABLE void moveLeft();
+    Q_INVOKABLE void moveRight();
+    Q_INVOKABLE void moveManWithMouse(int x, int y);
+    Q_INVOKABLE void addToUndoHistory(int dx, int dy,bool isPushing);
+    Q_INVOKABLE void undo();
+    Q_INVOKABLE void goToPreviousLevel();/* Change levels */
+    Q_INVOKABLE void goToNextLevel();
 };
 
 

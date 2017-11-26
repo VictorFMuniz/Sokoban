@@ -1,3 +1,8 @@
+#include "game.h"
+#include <QDebug>
+#include <QGuiApplication>
+#include <QQuickView>
+#include <QQmlContext>
 #include <QObject>
 #include <vector>
 #include <math.h>
@@ -6,9 +11,7 @@
 using namespace std;
 
     explicit game::game(QObject *parent = 0) {
-        QQuickView view;
-        view.setSource( QUrl( "qrc:///GameView.qml" ) );
-        view.show();
+
     }
 //    ~game();
     // nao entendi oq ta acontecendo nesse método

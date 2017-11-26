@@ -8,7 +8,7 @@ GameView::GameView()
 // Métodos para acessar o QML
 QObject* GameView::qmlObject;
 void GameView::setViewer(QObject* qmlGameView){
-        Game:: qmlObject = qmlGameView->findChild<QObject*>("gameCanvas");
+        Game:: qmlObject = qmlGameView;
 
 }
 

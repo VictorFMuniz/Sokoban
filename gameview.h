@@ -13,6 +13,9 @@ public:
     explicit GameView(QObject *parent = 0);
     //~Game();
 
+    static QObject* qmlObject;
+    static void setViewer(QObject*);
+
     bool opacity();
 
     int currentLevel();

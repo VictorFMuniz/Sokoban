@@ -13,6 +13,8 @@ class GameCanvas : public QObject
 public:
     explicit GameCanvas(QObject *parent = 0);
     //~GameCanvas();
+    static QObject* qmlObject;
+    static void setViewer(QObject*);
 
     bool isAnimated();
     int x();

@@ -16,34 +16,33 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.  *
  ***************************************************************************/
 
+#include <QQmlContext>
+#include <QDebug>
 #include <QGuiApplication>
 #include <QQuickView>
 #include <qqml.h> // for qmlRegisterType
 
 #include "orientation.h"
+#include "gameview.h"
+#include "gamecanvas.h"
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app( argc, argv );
 
+    GameView gameView;
+    GameCanvas gameCanvas;
+
     // Expose the Orientation class
     qmlRegisterType<Orientation>( "GameComponents", 1, 0, "Orientation" );
 
-    QQuickView viewer;
-    viewer.setSource( QUrl( "qrc:///main.qml" ) );
-    viewer.show();
-
-
-    QGuiApplication app(argc, argv);
-    Message msg;
-    qmlRegisterType<Message>( "MessageComponents", 1, 0, "Message" );
-
     QQuickView view;
-    view.engine()->rootContext()->setContextProperty("msg", &msg);
-    view.setSource( QUrl( "qrc:///main.qml" ) );
+    view.engine()->rootContext()->setContextProperty("gameView", &gameView);
+    view.engine()->rootContext()->setContextProperty("gameCanvas", &gameCanvas);
+    view.setSource( QUrl( "qrc:///gameView.qml" ) );
 
-    Message::setViewer(view.rootObject());
-    qDebug()<<Message::getNum();
+    GameView::setViewer(view.rootObject());
+    GameCanvas::setViewer(view.rootObject());
     view.show();
 
 

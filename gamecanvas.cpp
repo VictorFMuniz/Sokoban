@@ -1,5 +1,8 @@
 #include "gamecanvas.h"
 
+
+
+
 GameCanvas::GameCanvas()
 {
 
@@ -8,7 +11,7 @@ GameCanvas::GameCanvas()
 // Métodos para acessar o QML
 QObject* GameCanvas::qmlObject;
 void GameCanvas::setViewer(QObject* qmlGameCanvas){
-        Game:: qmlObject = qmlGameCanvas;
+        Game:: qmlObject = qmlGameCanvas->findChild<QObject*>("gameCanvas");
 
 }
 
