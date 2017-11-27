@@ -11,14 +11,14 @@ GameCanvas::GameCanvas()
 // Métodos para acessar o QML
 QObject* GameCanvas::qmlObject;
 void GameCanvas::setViewer(QObject* qmlGameCanvas){
-        Game:: qmlObject = qmlGameCanvas->findChild<QObject*>("gameCanvas");
+        GameCanvas:: qmlObject = qmlGameCanvas->findChild<QObject*>("gameCanvas");
 
 }
 
 bool GameCanvas::isAnimated(){
 
 }
-int GameCanvas::x(){
+int GameCanvas::getX(){
     return GameCanvas::qmlObject->property("x").toInt();
 }
 int GameCanvas::y(){

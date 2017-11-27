@@ -406,9 +406,10 @@ using namespace std;
     }
 
     void game::goToNextLevel() {
-        if (gameView.currentLevel() < gameView.levels().length - 1)
+        if (gameView.currentLevel() < gameView.levels().length - 1){
             ++gameView.currentLevel();
-        else
+       } else{
             gameView.currentLevel() = 0;
-        startNewGame();
+       }
+       startNewGame();
     }
