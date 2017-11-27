@@ -15,35 +15,35 @@ using namespace std;
 //    ~game();
     // nao entendi oq ta acontecendo nesse método
     int index(int column, int row) {
-        return column + (row * gameCanvas.numOfColumns);
+        return column + (row * gameCanvas.getNumOfColumns());
     }
     void game::startNewGame(){
-        gameView.state("playing");
-        if(gameView.currentLevel() < 0) {
-            gameView.currentLevel() = 0;
+        gameView.setState("playing");
+        if(gameView.getCurrentLevel() < 0) {
+            gameView.setCurrentLevel() = 0;
         }
-        gameCanvas.isAnimated = false;
+        gameCanvas.setIsAnimated(false);
 
-        if(gameView.currentLevel() >= gameView.levels().length) {
-            gameView.currentLevel() = 0;
+        if(gameView.getCurrentLevel() >= gameView.getLevels().length) {
+            gameView.setCurrentLevel() = 0;
         }
         undoHistory = new vector<int>();
         undoHistoryStep = 0;
         deleteBlocks();
 
-        gameCanvas.addBlockSize = 0;
-        gameCanvas.addOffsetX() = 0;
-        gameCanvas.addOffsetY() = 0;
-        gameCanvas.numOfRows() = gameView.levels()[gameView.currentLevel()].length;
+        gameCanvas.addBlockSize(0);
+        gameCanvas.addOffsetX(0);
+        gameCanvas.addOffsetY(0);
+        gameCanvas.numOfRows(gameView.getLevels()[gameView.getCurrentLevel()].length;);
 
-        gameCanvas.numOfColumns() = 0;
-            for (int i = 0; i < gameCanvas.numOfRows(); ++i) {
-                gameCanvas.numOfColumns() =   max(gameCanvas.numOfColumns(), gameView.levels()[gameView.currentLevel()][i].length);
+        gameCanvas.setNumOfColumns(0);
+            for (int i = 0; i < gameCanvas.getNumOfRows(); ++i) {
+                gameCanvas.setNumOfColumns(max(gameCanvas.getNumOfColumns(), gameView.getLevels()[gameView.getCurrentLevel()][i].length));
             }
-            maxIndex = gameCanvas.numOfRows() * gameCanvas.numOfColumns();
+            maxIndex = gameCanvas.getNumOfRows() * gameCanvas.getNumOfColumns();
 
             initBoard(); // initialize board
-            gameCanvas.isAnimated = true;
+            gameCanvas.setIsAnimated(true);
     }
 
     void game::deleteBlocks(){
@@ -67,15 +67,15 @@ using namespace std;
     }
 
     void game::createBoard() {
-        vector<int> board(gameCanvas.numOfRows());
+        vector<int> board(gameCanvas.getNumOfRows());
             numOfGoals = 0;
             numOfTreasures = 0;
 
-            for (int row = 0; row < gameCanvas.numOfRows(); ++row) {
-                 *board[row] = new vector<int>(gameCanvas.numOfColumns()); //verificar o funcionamento disso
-                for (int column = 0; column < gameCanvas.numOfColumns(); ++column) {
+            for (int row = 0; row < gameCanvas.getNumOfRows(); ++row) {
+                 *board[row] = new vector<int>(gameCanvas.getNumOfColumns()); //verificar o funcionamento disso
+                for (int column = 0; column < gameCanvas.getNumOfColumns(); ++column) {
 
-                    char boardElement = (column < gameView.levels()[gameView.currentLevel()][row].length) ? gameView.levels()[gameView.currentLevel()][row].charAt(column) : ' ';
+                    char boardElement = (column < gameView.getLevels()[gameView.getCurrentLevel()][row].length) ? gameView.getLevels()[gameView.getCurrentLevel()][row].charAt(column) : ' ';
                     switch (boardElement) {
                         case ' ': board[row][column] = 1; break;
                         case '#': board[row][column] = 2; break;
@@ -96,8 +96,8 @@ using namespace std;
 
         createBoard();
 
-        for (int column = 0; column < gameCanvas.numOfColumns(); ++column) {
-            for (int row = 0; row < gameCanvas.numOfRows(); ++row) {
+        for (int column = 0; column < gameCanvas.getNumOfColumns(); ++column) {
+            for (int row = 0; row < gameCanvas.getNumOfRows(); ++row) {
                 boardItems[index(column, row)] = NULL;
                 createBlock(column, row);
             }
@@ -187,8 +187,8 @@ using namespace std;
     }
 
     void game::setZooming(bool isZooming){
-        for (int row = 0; row < gameCanvas.numOfRows(); ++row) {
-            for (int column = 0; column < gameCanvas.numOfColumns(); ++column) {
+        for (int row = 0; row < gameCanvas.getNumOfRows(); ++row) {
+            for (int column = 0; column < gameCanvas.getNumOfColumns(); ++column) {
                 if (board[row][column] > 0){
                     boardItems[index(column, row)].isZooming = isZooming;
                 }
@@ -204,67 +204,67 @@ using namespace std;
     }
 
     void game::recenterMan(int x, int y, int dx, int dy){
-        int currentManPixelX = x * gameCanvas.blockSize() + gameCanvas.offsetX;
-        int currentManPixelY = y * gameCanvas.blockSize() + gameCanvas.offsetY;
+        int currentManPixelX = x * gameCanvas.getBlockSize() + gameCanvas.getOffsetX();
+        int currentManPixelY = y * gameCanvas.getBlockSize() + gameCanvas.getOffsetY();
 
-        if (gameCanvas.numOfColumns() * gameCanvas.blockSize() <= gameCanvas.width()) {
+        if (gameCanvas.getNumOfColumns() * gameCanvas.getBlockSize() <= gameCanvas.getWidth()) {
             dx = 0;
-            gameCanvas.addOffsetX() = 0;
+            gameCanvas.addOffsetX(0);
         }
-        if (gameCanvas.numOfRows() * gameCanvas.blockSize() <= gameCanvas.height()) {
+        if (gameCanvas.getNumOfRows() * gameCanvas.getBlockSize() <= gameCanvas.getHeight()) {
             dy = 0;
-            gameCanvas.addOffsetY() = 0;
+            gameCanvas.addOffsetY(0);
         }
 
         if (dx < 0 || dx > 1)
             while (currentManPixelX < 3 * gameCanvas.blockSize()) {
-                gameCanvas.addOffsetX() += gameCanvas.blockSize();
-                currentManPixelX += gameCanvas.blockSize();
+                gameCanvas.addOffsetX(gameCanvas.getBlockSize());
+                currentManPixelX += gameCanvas.getBlockSize();
             }
         if (dy < 0 || dy > 1)
-            while (currentManPixelY < 3 * gameCanvas.blockSize()) {
-                gameCanvas.addOffsetY() += gameCanvas.blockSize();
-                currentManPixelY += gameCanvas.blockSize();
+            while (currentManPixelY < 3 * gameCanvas.getBlockSize()) {
+                gameCanvas.addOffsetY(gameCanvasgetBlockSize());
+                currentManPixelY += gameCanvas.getBlockSize();
             }
         if (dx > 0)
-            while (currentManPixelX > gameCanvas.width() - 3 * gameCanvas.blockSize()) {
-                gameCanvas.addOffsetX() -= gameCanvas.blockSize();
-                currentManPixelX -= gameCanvas.blockSize();
+            while (currentManPixelX > gameCanvas.getWidth() - 3 * gameCanvas.getBlockSize()) {
+                gameCanvas.addOffsetX(-(gameCanvas.getBlockSize()));
+                currentManPixelX -= gameCanvas.getBlockSize();
             }
         if (dy > 0)
-            while (currentManPixelY > gameCanvas.height() - 3 * gameCanvas.blockSize()) {
-                gameCanvas.addOffsetY() -= gameCanvas.blockSize();
-                currentManPixelY -= gameCanvas.blockSize();
+            while (currentManPixelY > gameCanvas.getHeight() - 3 * gameCanvas.getBlockSize()) {
+                gameCanvas.addOffsetY(-(gameCanvas.getBlockSize()));
+                currentManPixelY -= gameCanvas.getBlockSize();
             }
     }
 
     void game::zoomIn() {
-        if (6 * gameCanvas.blockSize() > gameCanvas.width() || 6 * gameCanvas.blockSize() > gameCanvas.height()){
+        if (6 * gameCanvas.getBlockSize() > gameCanvas.getWidth() || 6 * gameCanvas.getBlockSize() > gameCanvas.getHeight()){
             return;
         }
         setZooming(true);
-        gameCanvas.addBlockSize += 5;
+        gameCanvas.addBlockSize(5);
         recenterMan(itemMan.column, itemMan.row, 2, 2); // dx = 2 and dy = 2 in order to force recentering in both directions
         setZooming(false);
     }
 
     void game::zoomOut() {
-        if (gameCanvas.blockSize() < 10){
+        if (gameCanvas.getBlockSize() < 10){
             return;
         }
 
         setZooming(true);
-        gameCanvas.addBlockSize -= 5;
+        gameCanvas.addBlockSize(-5);
         recenterMan(itemMan.column, itemMan.row, 2, 2); // dx = 2 and dy = 2 in order to force recentering in both directions
         setZooming(false);
     }
 
     void game::testLevelWon() {
         if (numOfTreasures == numOfGoals) {
-            if (gameView.currentLevel() >= gameView.levels().length - 1)
-                gameView.state("gamewon");
+            if (gameView.getCurrentLevel() >= gameView.getLevels().length - 1)
+                gameView.setState("gamewon");
             else
-                gameView.state("levelwon");
+                gameView.setState("levelwon");
         }
     }
 
@@ -333,8 +333,8 @@ using namespace std;
     }
 
     void game::moveManWithMouse(int x, int y) {
-        int dx = (int) floor((x - gameCanvas.offsetX) / gameCanvas.blockSize()) - itemMan.column;
-        int dy = (int) floor((y - gameCanvas.offsetY) / gameCanvas.blockSize()) - itemMan.row;
+        int dx = (int) floor((x - gameCanvas.getOffsetX()) / gameCanvas.getBlockSize()) - itemMan.column;
+        int dy = (int) floor((y - gameCanvas.getOffsetY()) / gameCanvas.getBlockSize()) - itemMan.row;
 
         if (dx != 0 && dy != 0) // we allow movement in one direction only
             return;
@@ -397,19 +397,19 @@ using namespace std;
     }
 
     void game::goToPreviousLevel() {
-        if (gameView.currentLevel() > 0) {
-            --gameView.currentLevel();
+        if (gameView.getCurrentLevel() > 0) {
+            --gameView.setCurrentLevel();
         } else {
-            gameView.currentLevel() = gameView.levels().length - 1;
+            gameView.setCurrentLevel(gameView.getLevels().length - 1);
         }
         startNewGame();
     }
 
     void game::goToNextLevel() {
-        if (gameView.currentLevel() < gameView.levels().length - 1){
-            ++gameView.currentLevel();
+        if (gameView.getCurrentLevel() < gameView.getLevels().length - 1){
+            gameView.setCurrentLevel(gameView.getCurrentLevel()+1);
        } else{
-            gameView.currentLevel() = 0;
+            gameView.setCurrentLevel(0);
        }
        startNewGame();
     }
