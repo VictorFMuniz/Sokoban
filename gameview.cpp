@@ -12,19 +12,34 @@ void GameView::setViewer(QObject* qmlGameView){
 
 }
 
-bool opacity(){
-    return GameView::qmlObject->property("opacity").toBool();
+int GameView::getOpacity(){
+    return GameCanvas::qmlObject->property("opacity").toBool();
+}
+int GameView::setOpacity(int level){
+    return GameCanvas::qmlObject->setProperty("opacity",level);
 }
 
-int GameView::currentLevel(){
+int GameView::getCurrentLevel(){
     return GameView::qmlObject->property("currentLevel").toInt();
 }
-bool GameView::isAnimated(){
-    return GameView::qmlObject->property("isAnimated").toBool();
+int GameView::setCurrentLevel(int level){
+    return GameView::qmlObject->setProperty("currentLevel",level);
 }
-void GameView::state(QString state){
+
+bool GameCanvas::getIsAnimated(){
+    return GameView::qmlObject->property("isAnimated").toInt();
+}
+bool GameCanvas::setIsAnimated(bool animate){
+    return GameView::qmlObject->setProperty("isAnimated",animate);
+}
+
+QString GameView::getState(){
+   return GameView::qmlObject->property("state").toString();
+}
+void GameView::setState(QString state){
    GameView::qmlObject->setProperty("state",state);
 }
+
 QObject* GameView::levels(){
     return GameView::qmlObject->property("levels");
 }

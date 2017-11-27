@@ -17,10 +17,13 @@ public:
     static QObject* qmlObject;
     static void setViewer(QObject*);
 
-    bool opacity();
-
-    int currentLevel();
-    bool isAnimated();
-    void state(QString);
+    int getOpacity();
+    int setOpacity(int);
+    int getCurrentLevel();
+    int setCurrentLevel(int);
+    bool getIsAnimated();
+    bool setIsAnimated(bool);
+    QString getState();
+    void setState(QString);
     QObject* levels();
 #endif // GAMEVIEW_H
